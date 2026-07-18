@@ -19,7 +19,6 @@ if (missingVars.length > 0) {
 }
 
 const contactRoutes = require('./routes/contactRoutes');
-const todoRoutes = require('./routes/todoRoutes');
 const authRoutes = require('./routes/authRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -73,7 +72,6 @@ app.get('/health', (req, res) => {
 
 // API Routes
 app.use('/api/contacts', contactRoutes);
-app.use('/api/todos', todoRoutes);
 app.use('/api/auth', authRoutes);
 
 // 404 Handler

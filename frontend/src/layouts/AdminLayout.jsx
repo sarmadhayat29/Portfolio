@@ -39,9 +39,6 @@ const AdminLayout = () => {
 
   const navItems = [
     { icon: <FiGrid />, label: 'Dashboard', path: '/admin/dashboard' },
-    { icon: <FiMessageSquare />, label: 'Messages', path: '/admin/messages' },
-    { icon: <FiFolder />, label: 'Projects', path: '/admin/projects' },
-    { icon: <FiStar />, label: 'Skills', path: '/admin/skills' },
   ];
 
   return (

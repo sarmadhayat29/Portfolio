@@ -38,9 +38,4 @@ export const api = {
   deleteContact: (id) => fetchWithAuth(`/contacts/${id}`, {
     method: 'DELETE',
   }),
-  getTodos: () => fetchWithAuth('/todos'),
-  createTodo: (name) => fetchWithAuth('/todos', {
-    method: 'POST',
-    body: JSON.stringify({ name }),
-  }),
 };
