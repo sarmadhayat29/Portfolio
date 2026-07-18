@@ -1,5 +1,5 @@
 import { FaReact, FaNodeJs, FaDatabase, FaGitAlt, FaHtml5, FaCss3Alt } from 'react-icons/fa';
-import { SiTailwindcss, SiTypescript, SiPrisma, SiExpress, SiMongodb, SiPython, SiCplusplus, SiLinux, SiWireshark, SiPostman } from 'react-icons/si';
+import { SiTailwindcss, SiPrisma, SiExpress, SiMongodb, SiPython, SiCplusplus, SiLinux, SiWireshark, SiPostman } from 'react-icons/si';
 import { DiJavascript1, DiJava } from 'react-icons/di';
 import { MdSecurity } from 'react-icons/md';
 
