@@ -17,12 +17,14 @@ const submitContact = async (req, res, next) => {
     });
 
    if (resend && process.env.ADMIN_EMAIL) {
-   await resend.emails.send({
+     await resend.emails.send({
         from: 'Portfolio <onboarding@resend.dev>',
         to: process.env.ADMIN_EMAIL,
         subject: `New Contact: ${subject || 'No Subject'}`,
         html: `<p><strong>Name:</strong> ${name}</p><p><strong>Email:</strong> ${email}</p><p><strong>Message:</strong><br/>${message}</p>`
       });
+    } else {
+      console.log("Resend not configured");
     }
 
     res.status(201).json({ message: 'Message sent successfully', contact });
