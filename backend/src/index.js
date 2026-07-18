@@ -1,4 +1,5 @@
 const express = require('express');
+const logger = require('./utils/logger');
 const cors = require('cors');
 const dotenv = require('dotenv');
 const helmet = require('helmet');
@@ -8,7 +9,17 @@ const prisma = require('./config/db');
 
 dotenv.config();
 
+// Strict Environment Validation
+const requiredEnvVars = ['DATABASE_URL', 'SUPABASE_JWT_SECRET'];
+const missingVars = requiredEnvVars.filter(envVar => !process.env[envVar]);
+
+if (missingVars.length > 0) {
+  logger.error(`FATAL ERROR: Missing required environment variables: ${missingVars.join(', ')}`);
+  process.exit(1);
+}
+
 const contactRoutes = require('./routes/contactRoutes');
+const todoRoutes = require('./routes/todoRoutes');
 const authRoutes = require('./routes/authRoutes');
 const errorHandler = require('./middlewares/errorHandler');
 
@@ -28,7 +39,22 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Standard Middleware
-app.use(cors());
+const allowedOrigins = [
+  'http://localhost:5173',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Blocked by CORS policy'));
+    }
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 // Root Route
@@ -47,6 +73,7 @@ app.get('/health', (req, res) => {
 
 // API Routes
 app.use('/api/contacts', contactRoutes);
+app.use('/api/todos', todoRoutes);
 app.use('/api/auth', authRoutes);
 
 // 404 Handler
@@ -58,15 +85,15 @@ app.use((req, res, next) => {
 app.use(errorHandler);
 
 const server = app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server is running on port ${PORT}`);
+  logger.info(`Server is running on port ${PORT}`);
 });
 
 // Graceful shutdown
 const shutdown = async () => {
-  console.log('Shutting down server...');
+  logger.info('Shutting down server...');
   server.close(async () => {
     await prisma.$disconnect();
-    console.log('Database disconnected. Server closed.');
+    logger.info('Database disconnected. Server closed.');
     process.exit(0);
   });
 };

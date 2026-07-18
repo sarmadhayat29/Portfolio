@@ -1,38 +1,22 @@
-const supabase = require('../config/supabase');
+const authService = require('../services/authService');
+const catchAsync = require('../utils/catchAsync');
 
-const login = async (req, res, next) => {
-  try {
-    const { email, password } = req.body;
-
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-
-    if (error) {
-      return res.status(401).json({ message: error.message });
-    }
-
-    res.status(200).json({
-      message: 'Login successful',
-      token: data.session.access_token,
-      user: data.user,
-    });
-  } catch (error) {
-    next(error);
+const login = catchAsync(async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password) {
+    return res.status(400).json({ message: 'Email and password are required' });
   }
-};
 
-const logout = async (req, res, next) => {
-  try {
-    const token = req.headers.authorization?.split(' ')[1];
-    if (token) {
-      await supabase.auth.admin.signOut(token);
-    }
-    res.status(200).json({ message: 'Logout successful' });
-  } catch (error) {
-    next(error);
-  }
-};
+  const sessionData = await authService.login(email, password);
+  res.status(200).json({ message: 'Login successful', data: sessionData });
+});
 
-module.exports = { login, logout };
+const logout = catchAsync(async (req, res) => {
+  const result = await authService.logout();
+  res.status(200).json(result);
+});
+
+module.exports = {
+  login,
+  logout
+};

@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import axios from 'axios';
+import { api } from '../../services/api';
 import Section from '../common/Section';
 import Button from '../common/Button';
 import { personalDetails } from '../../config/data';
@@ -35,7 +35,7 @@ const ContactSection = () => {
     try {
       // Point this to your backend once it is deployed. 
       // For now, assuming backend is running locally on port 5000.
-      await axios.post('http://localhost:5000/api/contacts', data);
+      await api.submitContact(data);
       setSubmitStatus('success');
       reset();
     } catch (error) {

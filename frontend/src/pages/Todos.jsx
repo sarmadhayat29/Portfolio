@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { supabase } from '../utils/supabase';
+import { api } from '../services/api';
 
 const Todos = () => {
   const [todos, setTodos] = useState([]);
@@ -12,12 +12,7 @@ const Todos = () => {
         setLoading(true);
         setError(null);
         
-        const { data, error: fetchError } = await supabase.from('todos').select();
-        
-        if (fetchError) {
-          throw fetchError;
-        }
-        
+        const data = await api.getTodos();
         setTodos(data || []);
       } catch (err) {
         setError(err.message);
