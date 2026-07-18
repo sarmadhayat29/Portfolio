@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Outlet, Navigate, useNavigate, Link, useLocation } from 'react-router-dom';
 import { supabase } from '../utils/supabase';
-import { FiMessageSquare, FiGrid, FiFolder, FiStar, FiLogOut, FiGlobe } from 'react-icons/fi';
+import { FiGrid, FiLogOut, FiGlobe } from 'react-icons/fi';
 
 const AdminLayout = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);

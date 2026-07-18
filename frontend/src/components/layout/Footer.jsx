@@ -1,5 +1,5 @@
 import { FaGithub, FaLinkedin, FaInstagram, FaEnvelope } from 'react-icons/fa';
-import { Link } from 'react-router-dom';
+
 import { personalDetails } from '../../config/data';
 
 const Footer = () => {
