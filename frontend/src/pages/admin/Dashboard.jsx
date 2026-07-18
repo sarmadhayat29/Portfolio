@@ -5,6 +5,7 @@ import { FiTrash2, FiMail, FiClock, FiCheckCircle, FiSearch, FiMessageSquare, Fi
 const Dashboard = () => {
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const [search, setSearch] = useState('');
   const [selectedMessage, setSelectedMessage] = useState(null);
 
@@ -14,10 +15,12 @@ const Dashboard = () => {
 
   const fetchContacts = async () => {
     try {
+      setError(null);
       const data = await api.getContacts();
       setContacts(data);
     } catch (err) {
       console.error(err);
+      setError(err.message);
     } finally {
       setLoading(false);
     }
@@ -34,6 +37,7 @@ const Dashboard = () => {
       await api.updateContactStatus(id, nextStatus);
     } catch (err) {
       fetchContacts();
+      alert(`Failed to update status: ${err.message}`);
     }
   };
 
@@ -41,12 +45,14 @@ const Dashboard = () => {
     if (e) e.stopPropagation();
     if (!window.confirm('Delete this message permanently?')) return;
     
+    const previousContacts = [...contacts];
     setContacts(contacts.filter(c => c.id !== id));
     if (selectedMessage?.id === id) setSelectedMessage(null);
     try {
       await api.deleteContact(id);
     } catch (err) {
-      fetchContacts();
+      setContacts(previousContacts);
+      alert(`Failed to delete message: ${err.message}`);
     }
   };
 
@@ -102,6 +108,12 @@ const Dashboard = () => {
           </div>
         ))}
       </div>
+
+      {error && (
+        <div className="bg-red-500/10 border border-red-500/20 text-red-400 p-4 rounded-xl font-medium animate-pulse">
+          Connection Error: {error}. Are you logged in with the correct Admin Email? Is your local backend running?
+        </div>
+      )}
 
       {/* Message Grid */}
       <div>
