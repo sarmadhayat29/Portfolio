@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 160 56% 7%;
+    --foreground: 210 40% 98%;
+    
+    --card: 164 41% 15%;
+    --card-foreground: 210 40% 98%;
+    
+    --popover: 164 41% 15%;
+    --popover-foreground: 210 40% 98%;
+    
+    --primary: 142 71% 45%;
+    --primary-foreground: 160 56% 7%;
+    
+    --secondary: 162 50% 12%;
+    --secondary-foreground: 210 40% 98%;
+    
+    --muted: 162 50% 12%;
+    --muted-foreground: 215 20% 65%;
+    
+    --accent: 142 71% 58%;
+    --accent-foreground: 160 56% 7%;
+    
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    
+    --border: 0 0% 100% / 0.08;
+    --input: 162 50% 12%;
+    --ring: 142 71% 45%;
+
+    --radius: 0.75rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans antialiased selection:bg-primary/30 selection:text-primary;
+    background-image: 
+      radial-gradient(at 0% 0%, hsla(142, 71%, 45%, 0.08) 0, transparent 50%), 
+      radial-gradient(at 100% 100%, hsla(164, 41%, 15%, 0.4) 0, transparent 50%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading tracking-tight;
+  }
+}
+
+@layer utilities {
+  .glass {
+    @apply bg-background/70 backdrop-blur-md border border-white/5;
+  }
+  .glass-card {
+    @apply bg-card/80 backdrop-blur-xl border border-white/5 rounded-2xl;
+  }
+  .text-gradient {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-emerald-200;
+  }
+}
