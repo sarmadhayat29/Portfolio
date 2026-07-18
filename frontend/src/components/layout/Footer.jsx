@@ -10,9 +10,6 @@ const Footer = () => {
           <p className="text-muted-foreground text-sm">
             © {new Date().getFullYear()} {personalDetails.name}. All rights reserved.
           </p>
-          <Link to="/admin/login" className="text-muted-foreground/30 hover:text-emerald-500/50 text-xs transition-colors ml-2">
-            Admin Portal
-          </Link>
         </div>
         
         <div className="flex items-center gap-6">

@@ -43,6 +43,12 @@ const Header = () => {
                 {link.name}
               </a>
             ))}
+            <Link 
+              to="/admin/dashboard" 
+              className="text-sm font-semibold bg-primary/10 text-primary border border-primary/20 px-4 py-2 rounded-full hover:bg-primary/20 transition-all hover:shadow-[0_0_15px_rgba(var(--primary),0.3)]"
+            >
+              Admin Portal
+            </Link>
           </nav>
         </div>
       </header>

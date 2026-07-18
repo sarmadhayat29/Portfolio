@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Outlet, Navigate, useNavigate, Link, useLocation } from 'react-router-dom';
 import { supabase } from '../utils/supabase';
-import { FiMessageSquare, FiGrid, FiFolder, FiStar, FiLogOut } from 'react-icons/fi';
+import { FiMessageSquare, FiGrid, FiFolder, FiStar, FiLogOut, FiGlobe } from 'react-icons/fi';
 
 const AdminLayout = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -66,7 +66,14 @@ const AdminLayout = () => {
             </Link>
           ))}
         </nav>
-        <div className="p-4 border-t border-white/5">
+        <div className="p-4 border-t border-white/5 space-y-2">
+          <Link
+            to="/"
+            className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-gray-400 hover:text-gray-200 hover:bg-white/5 border border-transparent transition-all"
+          >
+            <FiGlobe className="text-lg" />
+            <span className="font-medium text-sm">View Portfolio</span>
+          </Link>
           <button
             onClick={() => supabase.auth.signOut()}
             className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-red-400 hover:bg-red-500/10 hover:border-red-500/20 border border-transparent transition-all"
