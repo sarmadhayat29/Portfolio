@@ -30,6 +30,14 @@ export const api = {
     method: 'POST',
     body: JSON.stringify(data),
   }),
+  getContacts: () => fetchWithAuth('/contacts'),
+  updateContactStatus: (id, status) => fetchWithAuth(`/contacts/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status }),
+  }),
+  deleteContact: (id) => fetchWithAuth(`/contacts/${id}`, {
+    method: 'DELETE',
+  }),
   getTodos: () => fetchWithAuth('/todos'),
   createTodo: (name) => fetchWithAuth('/todos', {
     method: 'POST',
